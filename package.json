@@ -15,7 +15,7 @@
     "onView:halView"
   ],
   "main": "extension.js",
-  "icon": "images/hal.png",
+  "icon": "halWhite.png",
   "contributes": {
     "commands": [
       {
@@ -28,7 +28,7 @@
         {
           "id": "hal",
           "title": "HAL",
-          "icon": "hal.png"
+          "icon": "halWhite.png"
         }
       ]
     },

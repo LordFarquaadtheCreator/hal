@@ -1,5 +1,6 @@
 const vscode = require('vscode');
 const path = require('path');
+
 function getWebviewContent() {
     return `<!DOCTYPE html>
             <html lang="en">
@@ -26,7 +27,6 @@ function getWebviewContent() {
             </body>
             </html>`;
 }
-
 // our button that launches the web view
 class ButtonProvider {
   getTreeItem(element) {
@@ -34,13 +34,13 @@ class ButtonProvider {
   }
 
   getChildren() {
-    const button = new vscode.TreeItem("Launch Webview", vscode.TreeItemCollapsibleState.None);
+    const button = new vscode.TreeItem("Launch HAL", vscode.TreeItemCollapsibleState.None);
     button.iconPath = {
-      light: vscode.Uri.file(path.join(__dirname, 'hal.png')), // fuck light mode users
-      dark: vscode.Uri.file(path.join(__dirname, 'hal.png'))
+      light: vscode.Uri.file(path.join(__dirname, 'halBlack.png')), // fuck light mode
+      dark: vscode.Uri.file(path.join(__dirname, 'halWhite.png'))
     };
-    button.command = { command: 'hal.openWebview', title: "Launch Webview" };
-    button.tooltip = "Click to launch the webview";
+    button.command = { command: 'hal.openWebview', title: "Launch HAL Debugger" };
+    button.tooltip = "Click to launch the debugger";
     return [button];
   }
 }
