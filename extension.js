@@ -1,76 +1,64 @@
 const vscode = require('vscode');
 
-// I/O Boxes
-class InputTreeItem extends vscode.TreeItem {
-    constructor() {
-        super("Input", vscode.TreeItemCollapsibleState.None);
-        this.command = {
-            command: 'hal.captureInput',
-            title: "Enter Debug Error",
-            arguments: [this]
-        };
-    }
+function getWebviewContent() {
+    return `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>HAL Webview</title>
+            </head>
+            <body>
+                <h1>Hello from HAL!</h1>
+                <textarea id="inputArea"></textarea>
+                <button onclick="sendMessage()">Send</button>
+                <div id="outputArea"></div>
+                <script>
+                    const vscode = acquireVsCodeApi();
+                    function sendMessage() {
+                        const input = document.getElementById('inputArea').value;
+                        vscode.postMessage({
+                            command: 'input',
+                            text: input
+                        });
+                    }
+                </script>
+            </body>
+            </html>`;
 }
-class OutputTreeItem extends vscode.TreeItem {
-    constructor(output) {
-        super(output || "Output will be shown here", vscode.TreeItemCollapsibleState.None);
-    }
+class ButtonProvider {
+  getTreeItem(element) {
+    return element;
+  }
+
+  getChildren() {
+    const button = new vscode.TreeItem("Launch Webview", vscode.TreeItemCollapsibleState.None);
+    button.command = { command: 'hal.openWebview', title: "Launch Webview" };
+    return [button];
+  }
+
 }
-class HalDataProvider {
-    constructor() {
-        this.output = '';
-    }
+function activate(context) {
+  const buttonProvider = new ButtonProvider();
+  vscode.window.registerTreeDataProvider('halView', buttonProvider);
 
-    getTreeItem(element) {
-        return element;
-    }
+  let disposable = vscode.commands.registerCommand('hal.openWebview', () => {
+    const panel = vscode.window.createWebviewPanel(
+      'halWebview', 
+      'HAL Webview', 
+      vscode.ViewColumn.One, 
+      {
+        enableScripts: true
+      }
+    );
+    panel.webview.html = getWebviewContent();
+  });
 
-    getChildren() {
-        if (this.output) {
-            return [new InputTreeItem(), new OutputTreeItem(this.output)];
-        } else {
-            return [new InputTreeItem()];
-        }
-    }
-
-    _onDidChangeTreeData = new vscode.EventEmitter();
-    onDidChangeTreeData = this._onDidChangeTreeData.event;
-
-    refresh() {
-        this._onDidChangeTreeData.fire();
-    }
+  context.subscriptions.push(disposable);
 }
-/**
- * @param {vscode.ExtensionContext} context
- */
-async function activate(context) {
-    const halDataProvider = new HalDataProvider();
-    vscode.window.registerTreeDataProvider('HALInstance', halDataProvider);
-
-    let disposable = vscode.commands.registerCommand('hal.captureInput', async () => {
-        const result = await vscode.window.showInputBox({
-            prompt: "Enter your input",
-            placeHolder: "Type something here..."
-        });
-
-        if (result !== undefined) {
-            try {
-                const module = await import('./cli/cli.mjs');
-                const res = await module.processInput(result);
-                halDataProvider.output = res;
-                halDataProvider.refresh();
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    });
-
-    context.subscriptions.push(disposable);
-}
-// This method is called when your extension is deactivated
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+    activate,
+    deactivate
+};

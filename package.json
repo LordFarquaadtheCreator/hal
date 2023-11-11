@@ -1,8 +1,9 @@
 {
   "name": "hal",
-  "displayName": "hal",
-  "description": "ai assisted debugger",
+  "displayName": "HAL",
+  "description": "AI assisted debugger",
   "version": "0.0.1",
+  "publisher": "your-publisher-name",
   "engines": {
     "vscode": "^1.84.0"
   },
@@ -10,52 +11,49 @@
     "Other"
   ],
   "activationEvents": [
-    "onView:halInstance"
+    "onCommand:hal.openWebview",
+    "onView:halView"
   ],
-  "main": "./extension.js",
+  "main": "extension.js",
+  "icon": "images/hal.png",
   "contributes": {
+    "commands": [
+      {
+        "command": "hal.openWebview",
+        "title": "Open HAL Webview"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
-          {
-              "id": "hal",
-              "title": "HAL",
-              "icon": "hal.png"
-          }
-      ]
-    },
-    "views": {
-    "hal": [
         {
-          "id": "HALInstance",
-          "name": "HAL"
+          "id": "hal",
+          "title": "HAL",
+          "icon": "hal.png"
         }
       ]
     },
-    "commands": [
-      {
-        "command": "hal.helloWorld",
-        "title": "Capture Input"
-      }
-    ]
+    "views": {
+      "hal": [
+        {
+          "id": "halView",
+          "name": "HAL Interactive"
+        }
+      ]
+    }
   },
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
     "@types/vscode": "^1.84.0",
-    "@vscode/test-electron": "^2.3.6",
     "eslint": "^8.52.0",
-    "glob": "^10.3.10",
-    "mocha": "^10.2.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "openai": "^4.17.4",
-    "punycode": "^2.3.1"
-  }
+  "dependencies": {}
 }
