@@ -16,9 +16,9 @@ function generateChatResponse(apiKey, prompt) {
       apiKey: apiKey,
     });
     openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
       messages: [
-        { role: 'system', content: "You will recieve error outputs, your goal is to help me fix this error and understand how it happened. Your name is Hal - like the AI from 2001 space odyssey. You will respond quick and concise. You will output in plain text formatted to be legible on command line."},
+        { role: 'system', content: "You will recieve error outputs, your goal is to help me fix this error and understand how it happened. Your name is Hal - like the AI from 2001 space odyssey. You will respond quick and concise. You will output formatted in ANSI escape codes since you're outputting to the command line. Make your output colorful & pop."},
         { role: 'user', content: prompt }
       ],
     })
@@ -27,9 +27,8 @@ function generateChatResponse(apiKey, prompt) {
   });
 }
 export async function handleDebug(input) {
-  // console.log('recieved input:',input);
   try {
-    const response = await generateChatResponse(apiKey,String(input));
+    const response = await generateChatResponse(apiKey, String(input));
     console.log(response.choices[0].message.content);
   } catch (error) {
     console.error('Error:', error);

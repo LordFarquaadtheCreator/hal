@@ -35,8 +35,7 @@ function processInput(input) {
     });
 }
 // Ask for user input
-rl.question("Welcome to HAL. Remember, you're being watched.\n", (input) => {
-    processInput(input)
+rl.question("\x1b[1mWelcome to \x1b[31mHAL\x1b[0m.\x1b[0m \n\x1b[3m\x1b[90mRemember, you're being watched...\x1b[0m\n\x1b[42mLet's debug your code.\x1b[0m\n", (input) => {    processInput(input)
         .then((result) => {
             console.log(result);
             rl.close(); // Only close the readline interface after processing is complete
