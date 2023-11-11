@@ -1,7 +1,3 @@
-(async () => {
-    const module = await import('./cli/cli.mjs');
-    module.processInput();
-})();
 const vscode = require('vscode');
 
 // I/O Boxes
@@ -10,7 +6,7 @@ class InputTreeItem extends vscode.TreeItem {
         super("Input", vscode.TreeItemCollapsibleState.None);
         this.command = {
             command: 'hal.captureInput',
-            title: "Enter Input",
+            title: "Enter Debug Error",
             arguments: [this]
         };
     }
@@ -47,25 +43,30 @@ class HalDataProvider {
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
-	const halDataProvider = new HalDataProvider();
+async function activate(context) {
+    const halDataProvider = new HalDataProvider();
     vscode.window.registerTreeDataProvider('HALInstance', halDataProvider);
-    // const yourDataProvider = new YourTreeDataProvider();
-    // vscode.window.registerTreeDataProvider('HALInstance', yourDataProvider);
-	    let disposable = vscode.commands.registerCommand('hal.captureInput', async () => {
+
+    let disposable = vscode.commands.registerCommand('hal.captureInput', async () => {
         const result = await vscode.window.showInputBox({
             prompt: "Enter your input",
             placeHolder: "Type something here..."
         });
+
         if (result !== undefined) {
-            halDataProvider.output = `Processed: ${result}`; // Replace this with your actual processing
-            halDataProvider.refresh(); // Refresh the TreeView to show the output
+            try {
+                const module = await import('./cli/cli.mjs');
+                const res = await module.processInput(result);
+                halDataProvider.output = res;
+                halDataProvider.refresh();
+            } catch (err) {
+                console.error(err);
+            }
         }
     });
 
     context.subscriptions.push(disposable);
 }
-
 // This method is called when your extension is deactivated
 function deactivate() {}
 
