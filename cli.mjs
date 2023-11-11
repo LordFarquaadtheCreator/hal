@@ -1,8 +1,5 @@
-// const readline = require('readline');
 import readline from 'readline';
-// const { exec } = require('node:child_process');
 import {exec} from 'node:child_process';
-// const {debug} = require('./openai_chat.mjs');
 import {handleDebug} from './openai_chat.mjs';
 
 // Create an interface for input and output

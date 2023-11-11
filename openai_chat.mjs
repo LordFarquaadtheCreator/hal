@@ -1,12 +1,7 @@
-// const { OpenAI } = require('openai');
 import {OpenAI} from 'openai';
-
-// require('dotenv').config();
-// import('dotenv/config');
 import dotenv from 'dotenv/config'
 import { resolve } from 'path';
 import { rejects } from 'assert';
-
 const apiKey = process.env.OPENAI_API_KEY;
 
 
@@ -34,5 +29,3 @@ export async function handleDebug(input) {
     console.error('Error:', error);
   }
 }
-
-// handleDebug();
