@@ -1,38 +1,8 @@
+(async () => {
+    const module = await import('./cli/cli.mjs');
+    module.processInput();
+})();
 const vscode = require('vscode');
-
-class YourTreeDataProvider {
-    getTreeItem(element) {
-        // Return the tree item for your view
-        return element;
-    }
-
-    getChildren(element) {
-        // Return the children for the given tree item
-        if (!element) {
-            // If no element is passed, return the root level items as a promise
-            return Promise.resolve([
-				new YourTreeItem('Input Debug Mess Here!', vscode.TreeItemCollapsibleState.showInputBox({
-					value: '',
-					placeHolder: 'Type something here...'
-				})),
-                new YourTreeItem('Item 1', vscode.TreeItemCollapsibleState.None),
-                new YourTreeItem('Item 2', vscode.TreeItemCollapsibleState.Collapsed)
-            ]);
-        } else {
-            // If an element is passed, return its children
-            // For example, this could be a list of more detailed items
-            return Promise.resolve([]);
-        }
-    }
-}
-class YourTreeItem extends vscode.TreeItem {
-    constructor(label, collapsibleState) {
-        super(label, collapsibleState);
-        this.contextValue = 'yourTreeItem';
-    }
-    
-    // Add more properties or methods as needed
-}
 
 // I/O Boxes
 class InputTreeItem extends vscode.TreeItem {
