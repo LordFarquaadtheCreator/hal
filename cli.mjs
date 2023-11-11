@@ -1,6 +1,9 @@
-const readline = require('readline');
-const { exec } = require('node:child_process');
-
+// const readline = require('readline');
+import readline from 'readline';
+// const { exec } = require('node:child_process');
+import {exec} from 'node:child_process';
+// const {debug} = require('./openai_chat.mjs');
+import {handleDebug} from './openai_chat.mjs';
 
 // Create an interface for input and output
 const rl = readline.createInterface({
@@ -16,14 +19,12 @@ new Promise((resolveOuter) => {
   );
 });
 
-
-// Function to capture input and return output
 function processInput(input) {
     return new Promise((resolve, reject) => {
         exec(input, (error, stdout, stderr) => {
             if (error) {
                 // this is where api will debug
-                resolve("~~~ I Detected An Error ~~~");
+                resolve("~~~ I Detected An Error ~~~\n" + handleDebug(error));
             }
             else if (stderr) {
                 reject(new Error(`stderr: ${stderr}`));
