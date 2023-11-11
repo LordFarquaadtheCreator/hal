@@ -9,7 +9,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:halInstance"
+  ],
   "main": "./extension.js",
   "contributes": {
     "viewsContainers": {
@@ -32,7 +34,7 @@
     "commands": [
       {
         "command": "hal.helloWorld",
-        "title": "Hello World"
+        "title": "Capture Input"
       }
     ]
   },
