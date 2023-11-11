@@ -13,7 +13,7 @@ function generateChatResponse(apiKey, prompt) {
     openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
-        { role: 'system', content: "You will recieve error outputs, your goal is to help me fix this error and understand how it happened. Your name is Hal - like the AI from 2001 space odyssey. You will respond quick and concise."},
+        { role: 'system', content: "You will recieve error outputs, your goal is to help me fix this error and understand how it happened. Your name is Hal - like the AI from 2001 space odyssey. You will respond quick and concise and in plain text - no formatting."},
         { role: 'user', content: prompt }
       ],
     })

@@ -20,8 +20,8 @@ function processInput(input) {
     return new Promise((resolve, reject) => {
         exec(input, (error, stdout, stderr) => {
             if (error) {
-                // this is where api will debug
-                resolve("\x1b[1m\x1b[31m~~~ I Detected An Error ~~~\n\x1b[0m\x1b[3m\x1b[90mPlease Wait While I Think...\x1b[0m\n" + handleDebug(error));
+                console.log("\x1b[1m\x1b[31m~~~ I Detected An Error ~~~\n\x1b[0m\x1b[3m\x1b[90mPlease Wait While I Think...\x1b[0m\n");
+                resolve(handleDebug(error));
             }
             else if (stderr) {
                 reject(new Error(`stderr: ${stderr}`));
