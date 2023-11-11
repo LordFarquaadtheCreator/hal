@@ -12,6 +12,23 @@
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+          {
+              "id": "hal",
+              "title": "HAL",
+              "icon": "hal.png"
+          }
+      ]
+    },
+    "views": {
+    "hal": [
+        {
+          "id": "HALInstance",
+          "name": "HAL"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "hal.helloWorld",
