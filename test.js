@@ -1,1 +1,6 @@
-console.log("I am being tested");
+
+function test(){
+return("I am being tested";
+}
+
+console.log(test());
