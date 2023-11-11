@@ -24,12 +24,12 @@ function processInput(input) {
         exec(input, (error, stdout, stderr) => {
             if (error) {
                 // this is where api will debug
-                resolve("~~~ I Detected An Error ~~~\n" + handleDebug(error));
+                resolve("\x1b[1m\x1b[31m~~~ I Detected An Error ~~~\n\x1b[0m\x1b[3m\x1b[90mPlease Wait While I Think...\x1b[0m\n" + handleDebug(error));
             }
             else if (stderr) {
                 reject(new Error(`stderr: ${stderr}`));
             } else {
-                resolve('~~~ There Was No Error You Can Relax. Output Below. ~~~\n'+ stdout);
+                resolve("\x1b[3m\x1b[32m~~~ There Was No Error You Can Relax. Output Below... ~~~\n\x1b[0m"+ stdout);
             }
         });
     });
