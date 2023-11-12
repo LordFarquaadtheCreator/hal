@@ -1,12 +1,10 @@
-
 const axios = require('axios');
 const fs = require('fs').promises;
 
-async function sendInputToApi(inputText, filePath) {
+async function sendInputToApi(inputText) {
     try {
         const payload = {
-            text: inputText,
-            file: filePath
+            text: inputText
         };
 
         const response = await axios.post('http://localhost:4000/api/webview/input', payload);
@@ -15,4 +13,4 @@ async function sendInputToApi(inputText, filePath) {
         console.error('Error sending input to API:', error);
     }
 }
-sendInputToApi('efndkjwensfkjwenfkjwdenfkewkjf', 'dummy.js');
+sendInputToApi('efndkjwensfkjwenfkjwdenfkewkjf');
