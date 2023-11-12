@@ -1,7 +1,7 @@
-# hal
+# HAL
 he will not kill you
 
-(yet)
+*(yet)*
 
 There are **two** versions of this application you can run
 1) Run the CLI

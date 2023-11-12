@@ -1,5 +1,4 @@
-function test(){
-return(this is a test);
-}
+function myFunction (){
+    console.log(this is an error)
 
-console.log(test());
+myFunction()
