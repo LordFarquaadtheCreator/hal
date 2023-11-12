@@ -28,8 +28,8 @@ function generateChatResponse(apiKey, error, file) {
 export async function handleDebug(input, file) {
   try {
     const response = await generateChatResponse(apiKey, String(input), String(file));
-    console.log(response.choices[0].message.content);
+    return(response.choices[0].message.content);
   } catch (error) {
-    console.error('Error:', error);
+    return('Error:'+ error);
   }
 }

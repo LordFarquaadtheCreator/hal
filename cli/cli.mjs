@@ -9,7 +9,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-function readFileContents(filePath, callback) {
+export function readFileContents(filePath, callback) {
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading the file:', err);
@@ -24,7 +24,7 @@ export function processInput(input, file) {
         exec(input, (error, stdout, stderr) => {
             if (error) {
                 console.log("\x1b[1m\x1b[31m~~~ I Detected An Error ~~~\n\x1b[0m\x1b[3m\x1b[90mPlease Wait While I Think...\x1b[0m\n");
-                resolve(handleDebug(error, file));
+                console.log(resolve(handleDebug(error, file)));
             }
             else if (stderr) {
                 reject(new Error(`stderr: ${stderr}`));
