@@ -16,20 +16,10 @@ There are **two** versions of this application you can run
 - gpt ai
 
 ## How To Set It Up
-- `npm i`
 - in `dir` "server"
-    - `npm i`
-    - `npm i express`
-    - `npm i nodemon`
-    - `npm i openai`
-    - `npm i http`
-    - `npm i cors`
-    - `npm i path`
+- `npm i`
 
 - in `dir` "cli"
     - create `.env` file with `OPENAI_API_KEY` value
-    - `npm i readline`
-    - `npm i child_process`
-    - `npm i fs`
-    - `npm i express`
-    - `npm i cors`
+ 
+- run the application!
